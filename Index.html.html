@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cigar & Shine — Premium Carwash Concierge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111811;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .app {
+    background: #1a1f1a;
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    color: #e8e0d0;
+    position: relative;
+    border-radius: 0;
+  }
+
+  @media (min-width: 480px) {
+    .app { border-radius: 24px; min-height: auto; box-shadow: 0 0 60px #00000088; }
+  }
+
+  /* HEADER */
+  .header {
+    background: #0d1a0d;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #c9a84c44;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 16px; color: #c9a84c; letter-spacing: 1.5px; }
+  .lang-btn {
+    background: #c9a84c22; border: 1px solid #c9a84c66; color: #c9a84c;
+    font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 600;
+    padding: 5px 12px; border-radius: 20px; cursor: pointer; letter-spacing: 0.5px;
+  }
+
+  /* SCREENS */
+  .screen { display: none; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  .content { flex: 1; padding: 20px; }
+  .footer { padding: 14px 20px; border-top: 1px solid #c9a84c22; background: #0d1a0d; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 12px 0 18px; }
+  .brand-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #c9a84c; letter-spacing: 2.5px; margin-bottom: 3px; }
+  .brand-sub { font-size: 9px; color: #c9a84c88; letter-spacing: 3.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .slogan { font-size: 12px; color: #a09070; font-style: italic; line-height: 1.7; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, #c9a84c44, transparent); margin: 16px 0; }
+
+  /* SECTION TITLE */
+  .section-title { font-size: 10px; color: #c9a84c; letter-spacing: 3px; text-transform: uppercase; text-align: center; margin-bottom: 14px; }
+
+  /* PACKAGES */
+  .package {
+    background: #0d1a0d; border: 1px solid #c9a84c33; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .package:hover { border-color: #c9a84c88; }
+  .package.selected { border-color: #c9a84c; background: #0d2a0d; }
+  .pkg-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #c9a84c; margin-bottom: 3px; }
+  .pkg-desc { font-size: 10px; color: #a09070; }
+  .pkg-price { font-family: 'Playfair Display', serif; font-size: 20px; color: #e8e0d0; white-space: nowrap; }
+  .pkg-chf { font-size: 11px; color: #a09070; }
+
+  /* STEPS */
+  .steps { display: flex; justify-content: center; gap: 6px; align-items: center; margin-bottom: 16px; }
+  .step { text-align: center; }
+  .step-num { font-size: 15px; color: #c9a84c; }
+  .step-num.dim { color: #c9a84c44; }
+  .step-lbl { font-size: 8px; color: #a09070; letter-spacing: 0.3px; }
+  .step-arrow { color: #c9a84c33; font-size: 13px; padding-bottom: 10px; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: linear-gradient(135deg, #c9a84c, #a07830);
+    color: #0d1a0d; border: none; border-radius: 8px;
+    padding: 15px; width: 100%;
+    font-family: 'Montserrat', sans-serif; font-weight: 600;
+    font-size: 13px; letter-spacing: 1px; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary {
+    background: transparent; border: 1px solid #c9a84c66; color: #c9a84c;
+    border-radius: 8px; padding: 13px; flex: 1;
+    font-family: 'Montserrat', sans-serif; font-size: 12px;
+    font-weight: 600; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: #c9a84c11; }
+  .nav-row { display: flex; gap: 10px; }
+
+  /* FORM */
+  .field { margin-bottom: 14px; }
+  .label { font-size: 9px; color: #c9a84c; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .input {
+    width: 100%; background: #0d1a0d; border: 1px solid #c9a84c33;
+    border-radius: 7px; padding: 11px 13px; color: #e8e0d0;
+    font-family: 'Montserrat', sans-serif; font-size: 13px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .input:focus { border-color: #c9a84c; }
+  .input::placeholder { color: #a0907044; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* BADGE */
+  .badge {
+    background: #c9a84c22; border: 1px solid #c9a84c44;
+    border-radius: 20px; padding: 5px 14px; font-size: 10px;
+    color: #c9a84c; display: inline-block; margin-bottom: 14px;
+  }
+
+  /* INFO BOX */
+  .info-box {
+    background: #c9a84c0d; border: 1px solid #c9a84c2a;
+    border-radius: 8px; padding: 10px 13px;
+    font-size: 10px; color: #a09070; line-height: 1.7; margin-bottom: 14px;
+  }
+
+  /* CHECKBOX */
+  .check-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #0d1a0d; border: 1px solid #c9a84c2a;
+    border-radius: 8px; padding: 13px; margin-bottom: 14px; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .check-row:hover { border-color: #c9a84c66; }
+  .checkbox {
+    width: 20px; height: 20px; border: 1px solid #c9a84c66;
+    border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .checkbox.on { background: #c9a84c; border-color: #c9a84c; }
+  .check-text { font-size: 12px; color: #e8e0d0; line-height: 1.5; }
+  .check-sub { font-size: 10px; color: #a09070; margin-top: 3px; }
+  .firma-fields { display: none; }
+  .firma-fields.show { display: block; }
+
+  /* TIP */
+  .tip-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 14px; }
+  .tip-btn {
+    background: #0d1a0d; border: 1px solid #c9a84c33;
+    border-radius: 8px; padding: 11px 4px; color: #c9a84c;
+    font-family: 'Montserrat', sans-serif; font-size: 13px;
+    font-weight: 600; cursor: pointer; text-align: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .tip-btn:hover { border-color: #c9a84c88; }
+  .tip-btn.on { background: #c9a84c22; border-color: #c9a84c; }
+  .tip-sub2 { font-size: 8px; color: #a09070; font-weight: 400; margin-top: 1px; }
+
+  /* SUMMARY */
+  .summary {
+    background: #0d1a0d; border: 1px solid #c9a84c33;
+    border-radius: 10px; padding: 15px; margin-bottom: 14px;
+  }
+  .sum-row { display: flex; justify-content: space-between; font-size: 12px; color: #a09070; margin-bottom: 7px; }
+  .sum-total {
+    display: flex; justify-content: space-between;
+    font-size: 16px; color: #e8e0d0; font-weight: 600;
+    border-top: 1px solid #c9a84c33; padding-top: 10px; margin-top: 4px;
+  }
+
+  /* PAYMENT BUTTONS */
+  .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .pay-btn {
+    background: #0d1a0d; border: 1px solid #c9a84c33;
+    border-radius: 10px; padding: 14px; text-align: center;
+    cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  }
+  .pay-btn:hover { border-color: #c9a84c88; background: #0d2a0d; }
+  .pay-twint { border-color: #009ee033; }
+  .pay-twint:hover { border-color: #009ee0; }
+  .pay-twint .pay-name { color: #009ee0; font-size: 16px; font-weight: 700; }
+  .pay-cash .pay-name { color: #c9a84c; font-size: 16px; font-weight: 700; }
+  .pay-hint { font-size: 9px; color: #a09070; margin-top: 3px; }
+
+  /* STATUS BANNER */
+  .status-open { background: #0d2a0d; border: 1px solid #c9a84c33; border-radius: 8px; padding: 9px 13px; font-size: 10px; color: #a09070; text-align: center; margin-bottom: 14px; }
+  .status-closed { background: #2a0d0d; border: 1px solid #ff333322; border-radius: 8px; padding: 9px 13px; font-size: 11px; color: #ff8888; text-align: center; margin-bottom: 14px; }
+
+  /* CONFIRMATION */
+  .conf-icon {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: #c9a84c22; border: 2px solid #c9a84c;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .conf-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #c9a84c; text-align: center; margin-bottom: 10px; }
+  .conf-msg { font-size: 12px; color: #a09070; line-height: 1.9; text-align: center; margin-bottom: 22px; }
+  .status-box { background: #0d1a0d; border: 1px solid #c9a84c33; border-radius: 10px; padding: 15px; margin-bottom: 16px; }
+  .status-label { font-size: 10px; color: #c9a84c; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .status-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #e8e0d0; }
+  .pulse-dot { width: 9px; height: 9px; border-radius: 50%; background: #f0a500; animation: pulse 1.5s infinite; flex-shrink: 0; }
+
+  /* STAFF LOGIN */
+  #slogin .input { border-radius: 0; }
+  #slogin .btn-primary { border-radius: 0; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  /* MITARBEITER DASHBOARD */
+  .dash-order {
+    background: #0d1a0d; border: 1px solid #c9a84c33;
+    border-radius: 10px; padding: 14px; margin-bottom: 10px;
+  }
+  .dash-order-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .dash-pkg { font-family: 'Playfair Display', serif; font-size: 14px; color: #c9a84c; }
+  .dash-status { font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+  .s-waiting { background: #f0a50022; color: #f0a500; border: 1px solid #f0a50044; }
+  .s-working { background: #009ee022; color: #009ee0; border: 1px solid #009ee044; }
+  .s-done { background: #4caf5022; color: #4caf50; border: 1px solid #4caf5044; }
+  .dash-info { font-size: 11px; color: #a09070; line-height: 1.6; }
+  .dash-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .dash-btn { flex: 1; background: transparent; border: 1px solid #c9a84c44; border-radius: 6px; padding: 8px; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; color: #c9a84c; cursor: pointer; text-align: center; }
+  .dash-btn:hover { background: #c9a84c11; }
+  .dash-btn.primary { background: linear-gradient(135deg,#c9a84c,#a07830); color: #0d1a0d; border-color: transparent; }
+
+  .nav-tabs { display: flex; background: #0d1a0d; border-bottom: 1px solid #c9a84c22; }
+  .nav-tab { flex: 1; padding: 12px; text-align: center; font-size: 10px; font-weight: 600; color: #a09070; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; border-bottom: 2px solid transparent; transition: color 0.2s; }
+  .nav-tab.active { color: #c9a84c; border-bottom-color: #c9a84c; }
+  .photo-slot { background: #0d1a0d; border: 1px solid #c9a84c33; border-radius: 8px; height: 90px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s; overflow: hidden; position: relative; }
+  .photo-slot:hover { border-color: #c9a84c88; }
+  .photo-slot.done { border-color: #4caf50; }
+  .photo-placeholder { text-align: center; }
+  .photo-slot-sm { background: #0d1a0d; border: 1px solid #c9a84c33; border-radius: 6px; height: 72px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s; overflow: hidden; }
+  .photo-slot-sm:hover { border-color: #c9a84c88; }
+  .photo-slot-sm.done { border-color: #4caf50; }
+  .damage-choice { background: #0d1a0d; border: 1px solid #c9a84c33; border-radius: 10px; padding: 14px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .damage-choice:hover { border-color: #c9a84c88; }
+  .damage-choice.selected-no { border-color: #4caf50; background: #0d2a0d; }
+  .damage-choice.selected-yes { border-color: #f0a500; background: #1a1500; }
+  .view-tab { background: #0d1a0d; border: 1px solid #c9a84c33; color: #a09070; font-family: 'Montserrat',sans-serif; font-size: 10px; font-weight: 600; padding: 5px 10px; border-radius: 20px; cursor: pointer; letter-spacing: 0.5px; transition: all 0.2s; }
+  .view-tab:hover { border-color: #c9a84c88; color: #c9a84c; }
+  .view-tab.active { background: #c9a84c22; border-color: #c9a84c; color: #c9a84c; }
+  .zone-rect:hover { fill: rgba(201,168,76,0.12) !important; }
+  .zone-rect.marked { fill: rgba(240,165,0,0.18) !important; stroke: #f0a500 !important; }
+  .zone-tag { background: #f0a50022; border: 1px solid #f0a50066; border-radius: 20px; padding: 3px 8px; font-size: 9px; color: #f0a500; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="header">
+    <span class="logo">CIGAR & SHINE</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+      <button class="lang-btn" onclick="openStaffLogin()" style="font-size:10px;">⚙ Staff</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 1: LANDING ===== -->
+  <div class="screen active" id="s1">
+    <div class="content">
+      <div class="hero">
+        <svg viewBox="0 0 200 92" width="200" height="92" style="display:block;margin:0 auto 14px;">
+          <!-- Cigar -->
+          <ellipse cx="100" cy="78" rx="74" ry="7.5" fill="#7a4a1a" stroke="#c9a84c" stroke-width="0.8"/>
+          <ellipse cx="170" cy="78" rx="8" ry="7.5" fill="#4a2808" stroke="#c9a84c55" stroke-width="0.5"/>
+          <ellipse cx="28" cy="78" rx="4.5" ry="7.5" fill="#c9a84c" stroke="#a07030" stroke-width="0.5"/>
+          <!-- Cigar band -->
+          <rect x="80" y="71" width="22" height="15" rx="1" fill="#c9a84c1a" stroke="#c9a84c" stroke-width="0.7"/>
+          <text x="91" y="80.5" text-anchor="middle" font-size="4.2" fill="#c9a84c" font-family="serif" letter-spacing="0.3">C&amp;S</text>
+          <!-- Smoke -->
+          <path d="M28 70 Q23 61 27 52 Q31 43 25 34" stroke="#c9a84c33" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+          <path d="M33 68 Q37 58 33 49 Q29 40 35 31" stroke="#c9a84c22" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+          <path d="M22 72 Q17 63 21 55" stroke="#c9a84c1a" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+          <!-- Car body -->
+          <path d="M44 70 L44 56 Q45 47 54 45 L74 38 Q86 29 102 28 Q118 28 130 34 L150 45 Q157 47 158 56 L159 70 Z" fill="#162616" stroke="#c9a84c" stroke-width="1.3"/>
+          <!-- Roof/window area -->
+          <path d="M74 38 Q85 22 102 21 Q119 21 131 29 L150 45" fill="none" stroke="#c9a84c" stroke-width="1.1"/>
+          <!-- Window glass -->
+          <path d="M79 38 Q87 24 102 22 Q115 22 125 29 L138 40 L106 40 Z" fill="#0d1a0d" stroke="#c9a84c55" stroke-width="0.8"/>
+          <!-- B-pillar -->
+          <line x1="106" y1="22" x2="106" y2="40" stroke="#c9a84c33" stroke-width="0.6"/>
+          <!-- Door lines -->
+          <path d="M91 45 L91 62" stroke="#c9a84c33" stroke-width="0.7"/>
+          <path d="M122 43 L122 62" stroke="#c9a84c33" stroke-width="0.7"/>
+          <!-- Door handle -->
+          <rect x="105" y="52" width="8" height="2" rx="1" fill="#c9a84c44"/>
+          <!-- Front wheel -->
+          <circle cx="72" cy="70" r="11" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.3"/>
+          <circle cx="72" cy="70" r="6" fill="#111811" stroke="#c9a84c44" stroke-width="0.8"/>
+          <circle cx="72" cy="70" r="2.5" fill="#c9a84c"/>
+          <!-- Rear wheel -->
+          <circle cx="133" cy="70" r="11" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.3"/>
+          <circle cx="133" cy="70" r="6" fill="#111811" stroke="#c9a84c44" stroke-width="0.8"/>
+          <circle cx="133" cy="70" r="2.5" fill="#c9a84c"/>
+          <!-- Headlight -->
+          <ellipse cx="157" cy="53" rx="3" ry="2.2" fill="#c9a84c55" stroke="#c9a84c" stroke-width="0.6"/>
+          <!-- Tail -->
+          <rect x="44" y="50" width="2" height="14" rx="1" fill="#c9a84c33"/>
+          <!-- Ground reflection -->
+          <ellipse cx="100" cy="81" rx="56" ry="2.5" fill="#c9a84c" opacity="0.07"/>
+        </svg>
+        <div class="brand-title">CIGAR & SHINE</div>
+        <div class="brand-sub">Premium Carwash Concierge</div>
+        <div class="slogan" id="t-slogan">Ihr Genuss hat Vorrang.<br>Wir kümmern uns um den Glanz.</div>
+      </div>
+
+      <div id="timeBox"></div>
+
+      <div class="divider"></div>
+      <div class="section-title" id="t-choose">Programme wählen</div>
+
+      <div class="package" id="pkg1" onclick="pickPkg(1,79,'Quick Puff')">
+        <div style="flex:1;">
+          <div class="pkg-name">Quick Puff</div>
+          <div class="pkg-desc" id="t-d1">Aussenreinigung (ca. 60 Min.)</div>
+        </div>
+        <div><span class="pkg-price">79.—</span><span class="pkg-chf"> CHF</span></div>
+      </div>
+      <div class="package" id="pkg2" onclick="pickPkg(2,89,'Interior Glow')">
+        <div style="flex:1;">
+          <div class="pkg-name">Interior Glow</div>
+          <div class="pkg-desc" id="t-d2">Innenreinigung (ca. 60 Min.)</div>
+        </div>
+        <div><span class="pkg-price">89.—</span><span class="pkg-chf"> CHF</span></div>
+      </div>
+      <div class="package" id="pkg3" onclick="pickPkg(3,119,'Cigar & Shine Special')">
+        <div style="flex:1;">
+          <div class="pkg-name">Cigar & Shine Special</div>
+          <div class="pkg-desc" id="t-d3">Komplettreinigung (ca. 90 Min.)</div>
+        </div>
+        <div><span class="pkg-price">119.—</span><span class="pkg-chf"> CHF</span></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-lbl" id="t-st1">Programm</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num dim">2</div><div class="step-lbl" id="t-st2">Fahrzeug</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num dim">3</div><div class="step-lbl" id="t-st3">Details</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num dim">4</div><div class="step-lbl" id="t-st4">Zahlung</div></div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn-primary" id="t-book-btn" onclick="goToVehicle()">Programm wählen & Buchen</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: VEHICLE ===== -->
+  <div class="screen" id="s2">
+    <div class="content">
+      <div class="badge" id="s2badge">Quick Puff — 69.00 CHF</div>
+      <div class="section-title" id="t-s2title">Fahrzeug & Kontakt</div>
+      <div class="field"><label class="label" id="t-lemail">E-Mail *</label><input class="input" type="email" id="f-email" placeholder="ihre@email.ch"></div>
+      <div class="row2">
+        <div class="field"><label class="label" id="t-lmake">Marke *</label><input class="input" id="f-make" placeholder="Mercedes"></div>
+        <div class="field"><label class="label" id="t-lmodel">Modell *</label><input class="input" id="f-model" placeholder="300 SL"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label class="label" id="t-lcolor">Farbe *</label><input class="input" id="f-color" placeholder="Silber"></div>
+        <div class="field"><label class="label" id="t-lplate">Kennzeichen</label><input class="input" id="f-plate" placeholder="ZH 123456"></div>
+      </div>
+      <div class="field"><label class="label" id="t-lloc">Parkplatz</label><input class="input" id="f-loc" placeholder="z.B. Reihe 3, Parkplatz Nord"></div>
+      <div class="info-box" id="t-datainfo">Fahrzeugdaten werden lokal gespeichert für schnellere Buchungen. Nur für Auftragsabwicklung verwendet.</div>
+    </div>
+    <div class="footer">
+      <div class="nav-row">
+        <button class="btn-secondary" onclick="go(1)" id="t-back2">Zurück</button>
+        <button class="btn-primary" style="flex:2;" onclick="go(3)" id="t-next2">Weiter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: INVOICE DETAILS ===== -->
+  <div class="screen" id="s3">
+    <div class="content">
+      <div class="badge" id="s3badge">Quick Puff — 69.00 CHF</div>
+      <div class="section-title" id="t-s3title">Rechnungsdetails</div>
+      <div class="info-box" id="t-s3info">Benötigen Sie eine Firmenrechnung? Aktivieren Sie die Option für steuerliche Abzüge.</div>
+      <div class="check-row" onclick="toggleFirma()">
+        <div class="checkbox" id="firmaCb"></div>
+        <div>
+          <div class="check-text" id="t-firmacb">Ich benötige eine Firmenrechnung</div>
+          <div class="check-sub" id="t-firmasub">Für steuerliche Abzüge (optional)</div>
+        </div>
+      </div>
+      <div class="firma-fields" id="firmaFields">
+        <div class="field"><label class="label" id="t-lcompany">Firmenname</label><input class="input" id="f-company" placeholder="Muster AG"></div>
+        <div class="field"><label class="label" id="t-lstreet">Strasse</label><input class="input" id="f-street" placeholder="Musterstrasse 1"></div>
+        <div class="row2">
+          <div class="field"><label class="label" id="t-lplz">PLZ</label><input class="input" id="f-plz" placeholder="8305"></div>
+          <div class="field"><label class="label" id="t-lcity">Ort</label><input class="input" id="f-city" placeholder="Dietlikon"></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p style="font-size:10px;color:#a09070;text-align:center;line-height:1.6;" id="t-privacy">Ihre Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.</p>
+    </div>
+    <div class="footer">
+      <div class="nav-row">
+        <button class="btn-secondary" onclick="go(2)" id="t-back3">Zurück</button>
+        <button class="btn-primary" style="flex:2;" onclick="go(4)" id="t-next3">Weiter zur Zahlung</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: TIP & PAYMENT ===== -->
+  <div class="screen" id="s4">
+    <div class="content">
+      <div class="badge" id="s4badge">Quick Puff — 69.00 CHF</div>
+      <div class="section-title" id="t-s4title">Trinkgeld & Zahlung</div>
+      <p style="text-align:center;font-size:11px;color:#a09070;margin-bottom:12px;font-style:italic;" id="t-tipq">Ein Dankeschön für das Service-Team?</p>
+      <div class="tip-grid">
+        <div class="tip-btn on" id="tip0" onclick="setTip(0)"><div>—</div><div class="tip-sub2" id="t-nein">Nein</div></div>
+        <div class="tip-btn" id="tip5" onclick="setTip(5)"><div>5</div><div class="tip-sub2">CHF</div></div>
+        <div class="tip-btn" id="tip10" onclick="setTip(10)"><div>10</div><div class="tip-sub2">CHF</div></div>
+        <div class="tip-btn" id="tip20" onclick="setTip(20)"><div>20</div><div class="tip-sub2">CHF</div></div>
+      </div>
+      <div class="field">
+        <label class="label" id="t-lcustom">Eigener Betrag (CHF)</label>
+        <input class="input" type="number" id="f-tip" placeholder="0.00" oninput="customTip(this.value)">
+      </div>
+      <div class="summary">
+        <div class="sum-row"><span id="t-sprogram">Programm</span><span id="sum-prog">69.00 CHF</span></div>
+        <div class="sum-row" id="tipRow" style="display:none;"><span id="t-stip">Trinkgeld</span><span id="sum-tip">—</span></div>
+        <div class="sum-total"><span id="t-stotal">Total</span><span id="sum-total">69.00 CHF</span></div>
+      </div>
+      <div class="section-title" id="t-spay">Zahlungsart</div>
+      <div class="pay-grid">
+        <div class="pay-btn pay-twint" onclick="finalize('TWINT')">
+          <div class="pay-name">TWINT</div>
+          <div class="pay-hint" id="t-twinthint">Vor Ort bezahlen</div>
+        </div>
+        <div class="pay-btn pay-cash" onclick="finalize('Bar')">
+          <div class="pay-name" id="t-cash">Bar</div>
+          <div class="pay-hint" id="t-cashhint">An der Bar bezahlen</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn-secondary" style="width:100%;" onclick="go(3)" id="t-back4">Zurück</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 5: CONFIRMATION ===== -->
+  <div class="screen" id="s5">
+    <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;padding:30px 20px;">
+      <div class="conf-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M8 16L13 21L24 10" stroke="#c9a84c" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="conf-title" id="t-conftitle">Auftrag bestätigt!</div>
+      <div class="conf-msg" id="t-confmsg">Bitte hinterlegen Sie den Schlüssel beim Bar-Mitarbeiter.<br>Wir kümmern uns um den Rest.</div>
+      <div class="status-box" style="width:100%;">
+        <div class="status-label" id="t-confstatus">Status</div>
+        <div class="status-row">
+          <div class="pulse-dot"></div>
+          <span id="t-confwaiting">Wartend — Team wird benachrichtigt</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#c9a84c;font-style:italic;text-align:center;margin-bottom:20px;" id="confDetail"></p>
+      <div style="border-top:1px solid #c9a84c33;padding-top:20px;width:100%;text-align:center;">
+        <p style="font-family:'Playfair Display',serif;font-size:14px;color:#c9a84c;line-height:1.8;">Danke für Ihr Vertrauen.</p>
+        <p style="font-size:12px;color:#a09070;font-style:italic;margin-top:4px;">Geniessen Sie Ihre Zigarre. 🥃</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAFF DASHBOARD ===== -->
+  <div class="screen" id="sdash">
+    <div class="nav-tabs">
+      <div class="nav-tab active" id="tab-orders" onclick="switchTab('orders')">Aufträge</div>
+      <div class="nav-tab" id="tab-done" onclick="switchTab('done')">Abgeschlossen</div>
+    </div>
+    <div class="content" id="dashContent">
+      <div style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:10px;color:#a09070;">Mittwoch, 29. April 2026</div>
+        <div style="font-size:10px;color:#c9a84c;">3 aktive Aufträge</div>
+      </div>
+
+      <div class="dash-order" id="order-1">
+        <div class="dash-order-top">
+          <div class="dash-pkg">Cigar & Shine Special</div>
+          <div class="dash-status s-waiting" id="status-1">Wartend</div>
+        </div>
+        <div class="dash-info">
+          Mercedes 300 SL · Silber · ZH 123456<br>
+          Parkplatz Nord, Reihe 3 · 109.00 + 10.00 Trinkgeld
+        </div>
+        <div class="dash-actions">
+          <div class="dash-btn" onclick="openCheckin(1)">📷 Check-In</div>
+          <div class="dash-btn primary" onclick="startOrder(1)">▶ Start</div>
+        </div>
+      </div>
+
+      <div class="dash-order" id="order-2">
+        <div class="dash-order-top">
+          <div class="dash-pkg">Quick Puff</div>
+          <div class="dash-status s-working" id="status-2">In Arbeit</div>
+        </div>
+        <div class="dash-info">
+          Porsche 911 · Schwarz · ZH 987654<br>
+          Parkplatz Süd · 69.00 CHF
+        </div>
+        <div class="dash-actions">
+          <div class="dash-btn" onclick="openCheckout(2)">📷 Check-Out</div>
+          <div class="dash-btn primary" onclick="finishOrder(2)">✓ Fertig</div>
+        </div>
+      </div>
+
+      <div class="dash-order" id="order-3">
+        <div class="dash-order-top">
+          <div class="dash-pkg">Interior Glow</div>
+          <div class="dash-status s-waiting" id="status-3">Wartend</div>
+        </div>
+        <div class="dash-info">
+          BMW M5 · Blau · SG 445566<br>
+          Eingang Lounge · 79.00 + 5.00 Trinkgeld
+        </div>
+        <div class="dash-actions">
+          <div class="dash-btn" onclick="openCheckin(3)">📷 Check-In</div>
+          <div class="dash-btn primary" onclick="startOrder(3)">▶ Start</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn-secondary" style="width:100%;" onclick="go(1)">← Zurück zur App</button>
+    </div>
+  </div>
+
+  <!-- ===== CHECK-IN SCREEN ===== -->
+  <div class="screen" id="scheckin">
+    <div class="header" style="position:relative;">
+      <span class="logo" style="font-size:13px;" id="ci-order-title">Check-In · Auftrag #1</span>
+      <button class="lang-btn" onclick="showDash()">✕</button>
+    </div>
+    <div class="content" style="padding-bottom:20px;">
+
+      <div class="section-title" style="margin-top:8px;">Pflichtfotos — 4 Seiten</div>
+      <div class="info-box">Bitte je ein Foto von allen 4 Seiten des Fahrzeugs aufnehmen, bevor Sie starten.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+        <div class="photo-slot" id="ci-photo-vorne" onclick="triggerPhoto('ci-photo-vorne','ci-img-vorne')">
+          <img id="ci-img-vorne" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="ci-ph-vorne">
+            <div style="font-size:22px;">📷</div>
+            <div style="font-size:10px;margin-top:4px;color:#a09070;">Vorne</div>
+          </div>
+        </div>
+        <div class="photo-slot" id="ci-photo-hinten" onclick="triggerPhoto('ci-photo-hinten','ci-img-hinten')">
+          <img id="ci-img-hinten" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="ci-ph-hinten">
+            <div style="font-size:22px;">📷</div>
+            <div style="font-size:10px;margin-top:4px;color:#a09070;">Hinten</div>
+          </div>
+        </div>
+        <div class="photo-slot" id="ci-photo-links" onclick="triggerPhoto('ci-photo-links','ci-img-links')">
+          <img id="ci-img-links" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="ci-ph-links">
+            <div style="font-size:22px;">📷</div>
+            <div style="font-size:10px;margin-top:4px;color:#a09070;">Links</div>
+          </div>
+        </div>
+        <div class="photo-slot" id="ci-photo-rechts" onclick="triggerPhoto('ci-photo-rechts','ci-img-rechts')">
+          <img id="ci-img-rechts" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="ci-ph-rechts">
+            <div style="font-size:22px;">📷</div>
+            <div style="font-size:10px;margin-top:4px;color:#a09070;">Rechts</div>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhoto(event)">
+
+      <!-- DAMAGE CHECK -->
+      <div class="divider"></div>
+      <div class="section-title">Zustandsprotokoll</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div class="damage-choice" id="dc-no" onclick="setDamage(false)">
+          <div style="font-size:20px;margin-bottom:4px;">✓</div>
+          <div style="font-size:12px;font-weight:600;color:#4caf50;">Schadensfrei</div>
+          <div style="font-size:9px;color:#a09070;margin-top:2px;">Keine Mängel</div>
+        </div>
+        <div class="damage-choice" id="dc-yes" onclick="setDamage(true)">
+          <div style="font-size:20px;margin-bottom:4px;">⚠</div>
+          <div style="font-size:12px;font-weight:600;color:#f0a500;">Schäden vorhanden</div>
+          <div style="font-size:9px;color:#a09070;margin-top:2px;">Details erfassen</div>
+        </div>
+      </div>
+
+      <!-- DAMAGE DETAILS (hidden until damage=yes) -->
+      <div id="damageDetails" style="display:none;">
+        <div class="section-title">Schaden-Details</div>
+
+        <!-- Car 5-view diagram -->
+        <div style="background:#0d1a0d;border:1px solid #c9a84c33;border-radius:10px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:9px;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Position markieren — Ansicht wählen</div>
+
+          <!-- View tabs -->
+          <div style="display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap;">
+            <button class="view-tab active" id="vtab-top" onclick="switchView('top')">Oben</button>
+            <button class="view-tab" id="vtab-front" onclick="switchView('front')">Vorne</button>
+            <button class="view-tab" id="vtab-rear" onclick="switchView('rear')">Hinten</button>
+            <button class="view-tab" id="vtab-left" onclick="switchView('left')">Links</button>
+            <button class="view-tab" id="vtab-right" onclick="switchView('right')">Rechts</button>
+          </div>
+
+          <!-- TOP VIEW — proper sedan bird's eye -->
+          <div id="view-top" class="car-view">
+            <svg viewBox="0 0 320 200" width="100%" style="display:block;">
+              <!-- Shadow -->
+              <ellipse cx="160" cy="170" rx="110" ry="10" fill="#000" opacity="0.3"/>
+              <!-- Main body — long sedan shape -->
+              <path d="M60 155 L60 105 Q60 90 68 82 L80 72 L88 48 Q95 30 105 24 L160 20 L215 24 Q225 30 232 48 L240 72 L252 82 Q260 90 260 105 L260 155 Q260 162 252 162 L68 162 Q60 162 60 155 Z" fill="#1e2e1e" stroke="#c9a84c" stroke-width="1.4"/>
+              <!-- Front bumper detail -->
+              <path d="M88 48 Q95 32 105 26 L160 22 L215 26 Q225 32 232 48" fill="none" stroke="#c9a84c88" stroke-width="0.8"/>
+              <!-- Rear bumper detail -->
+              <path d="M80 150 L68 155 Q60 158 60 162" fill="none" stroke="#c9a84c44" stroke-width="0.7"/>
+              <path d="M240 150 L252 155 Q260 158 260 162" fill="none" stroke="#c9a84c44" stroke-width="0.7"/>
+              <!-- Hood -->
+              <path d="M92 50 Q98 34 108 28 L160 24 L212 28 Q222 34 228 50 L232 72 L88 72 Z" fill="#243424" stroke="#c9a84c44" stroke-width="0.6"/>
+              <!-- Windshield -->
+              <path d="M95 72 L92 86 L228 86 L225 72 Z" fill="#0d2a1a" stroke="#c9a84c66" stroke-width="0.8"/>
+              <!-- Cabin roof -->
+              <rect x="95" y="88" width="130" height="46" rx="2" fill="#2a3e2a" stroke="#c9a84c33" stroke-width="0.6"/>
+              <!-- Rear windshield -->
+              <path d="M95 136 L92 150 L228 150 L225 136 Z" fill="#0d2a1a" stroke="#c9a84c66" stroke-width="0.8"/>
+              <!-- Boot lid -->
+              <path d="M92 152 L88 162 L232 162 L228 152 Z" fill="#1e2e1e" stroke="#c9a84c33" stroke-width="0.5"/>
+              <!-- Door divider lines -->
+              <line x1="95" y1="86" x2="95" y2="136" stroke="#c9a84c55" stroke-width="0.8"/>
+              <line x1="225" y1="86" x2="225" y2="136" stroke="#c9a84c55" stroke-width="0.8"/>
+              <line x1="160" y1="86" x2="160" y2="136" stroke="#c9a84c22" stroke-width="0.6" stroke-dasharray="3,3"/>
+              <!-- Center line dashed -->
+              <line x1="160" y1="20" x2="160" y2="165" stroke="#c9a84c18" stroke-width="0.5" stroke-dasharray="5,4"/>
+              <!-- FL wheel -->
+              <rect x="44" y="52" width="16" height="38" rx="7" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.1"/>
+              <rect x="47" y="57" width="10" height="28" rx="4" fill="#162616"/>
+              <ellipse cx="52" cy="71" rx="4" ry="4" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <!-- FR wheel -->
+              <rect x="260" y="52" width="16" height="38" rx="7" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.1"/>
+              <rect x="263" y="57" width="10" height="28" rx="4" fill="#162616"/>
+              <ellipse cx="268" cy="71" rx="4" ry="4" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <!-- RL wheel -->
+              <rect x="44" y="122" width="16" height="38" rx="7" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.1"/>
+              <rect x="47" y="127" width="10" height="28" rx="4" fill="#162616"/>
+              <ellipse cx="52" cy="141" rx="4" ry="4" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <!-- RR wheel -->
+              <rect x="260" y="122" width="16" height="38" rx="7" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.1"/>
+              <rect x="263" y="127" width="10" height="28" rx="4" fill="#162616"/>
+              <ellipse cx="268" cy="141" rx="4" ry="4" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <!-- Labels -->
+              <text x="160" y="14" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">VORNE</text>
+              <text x="160" y="196" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">HINTEN</text>
+              <text x="12" y="94" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" transform="rotate(-90,12,94)" letter-spacing="2">LINKS</text>
+              <text x="308" y="94" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" transform="rotate(90,308,94)" letter-spacing="2">RECHTS</text>
+              <!-- CLICKABLE ZONES -->
+              <rect x="92" y="20" width="136" height="50" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('motorhaube')" class="zone-rect" data-zone="motorhaube" title="Motorhaube"/>
+              <rect x="44" y="22" width="52" height="52" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('ecke-vorne-links')" class="zone-rect" data-zone="ecke-vorne-links"/>
+              <rect x="224" y="22" width="52" height="52" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('ecke-vorne-rechts')" class="zone-rect" data-zone="ecke-vorne-rechts"/>
+              <rect x="44" y="76" width="54" height="62" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('seite-links')" class="zone-rect" data-zone="seite-links"/>
+              <rect x="222" y="76" width="54" height="62" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('seite-rechts')" class="zone-rect" data-zone="seite-rechts"/>
+              <rect x="97" y="88" width="126" height="46" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('dach')" class="zone-rect" data-zone="dach"/>
+              <rect x="44" y="138" width="52" height="46" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('ecke-hinten-links')" class="zone-rect" data-zone="ecke-hinten-links"/>
+              <rect x="224" y="138" width="52" height="46" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('ecke-hinten-rechts')" class="zone-rect" data-zone="ecke-hinten-rechts"/>
+              <rect x="92" y="148" width="136" height="36" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" stroke-width="0.5" rx="2" style="cursor:pointer;" onclick="markZone('kofferraum')" class="zone-rect" data-zone="kofferraum"/>
+              <g id="dmg-dots-top"></g>
+            </svg>
+          </div>
+
+          <!-- FRONT VIEW — sedan front face -->
+          <div id="view-front" class="car-view" style="display:none;">
+            <svg viewBox="0 0 320 190" width="100%" style="display:block;">
+              <ellipse cx="160" cy="182" rx="130" ry="6" fill="#000" opacity="0.25"/>
+              <!-- Body shape -->
+              <path d="M38 160 L38 108 Q40 92 52 84 L72 76 Q90 58 108 50 Q130 40 160 38 Q190 40 212 50 Q230 58 248 76 L268 84 Q280 92 282 108 L282 160 Q282 168 274 168 L46 168 Q38 168 38 160 Z" fill="#1e2e1e" stroke="#c9a84c" stroke-width="1.4"/>
+              <!-- Windshield — slanted sedan -->
+              <path d="M108 50 Q130 42 160 40 Q190 42 212 50 L222 90 L98 90 Z" fill="#0d2a1a" stroke="#c9a84c77" stroke-width="0.9"/>
+              <!-- A-pillars -->
+              <line x1="108" y1="50" x2="98" y2="90" stroke="#c9a84c55" stroke-width="1"/>
+              <line x1="212" y1="50" x2="222" y2="90" stroke="#c9a84c55" stroke-width="1"/>
+              <!-- Hood -->
+              <path d="M72 76 Q90 60 108 52 L212 52 Q230 60 248 76 L252 90 L68 90 Z" fill="#243424" stroke="#c9a84c33" stroke-width="0.7"/>
+              <!-- Front bumper -->
+              <path d="M52 138 Q46 142 44 152 L44 160 Q44 166 52 167 L268 167 Q276 166 276 160 L276 152 Q274 142 268 138 Z" fill="#162616" stroke="#c9a84c55" stroke-width="0.8"/>
+              <!-- Grille opening -->
+              <path d="M118 142 Q130 136 160 134 Q190 136 202 142 L204 158 L116 158 Z" fill="#0a140a" stroke="#c9a84c" stroke-width="0.9"/>
+              <!-- Grille slats -->
+              <line x1="135" y1="136" x2="133" y2="157" stroke="#c9a84c44" stroke-width="0.6"/>
+              <line x1="150" y1="134" x2="150" y2="158" stroke="#c9a84c44" stroke-width="0.6"/>
+              <line x1="160" y1="134" x2="160" y2="158" stroke="#c9a84c33" stroke-width="0.8"/>
+              <line x1="170" y1="134" x2="170" y2="158" stroke="#c9a84c44" stroke-width="0.6"/>
+              <line x1="185" y1="136" x2="187" y2="157" stroke="#c9a84c44" stroke-width="0.6"/>
+              <!-- Headlights — wide thin sedan style -->
+              <path d="M52 96 Q56 88 68 86 L96 86 L100 108 L52 108 Q46 106 46 100 Z" fill="#c9a84c18" stroke="#c9a84c" stroke-width="0.9"/>
+              <line x1="70" y1="86" x2="72" y2="108" stroke="#c9a84c44" stroke-width="0.5"/>
+              <path d="M268 96 Q264 88 252 86 L224 86 L220 108 L268 108 Q274 106 274 100 Z" fill="#c9a84c18" stroke="#c9a84c" stroke-width="0.9"/>
+              <line x1="250" y1="86" x2="248" y2="108" stroke="#c9a84c44" stroke-width="0.5"/>
+              <!-- Lower body between headlights -->
+              <rect x="100" y="90" width="120" height="44" rx="2" fill="#243424" stroke="#c9a84c22" stroke-width="0.5"/>
+              <!-- Wheels -->
+              <ellipse cx="82" cy="168" rx="36" ry="16" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.2"/>
+              <ellipse cx="82" cy="168" rx="22" ry="10" fill="#162616" stroke="#c9a84c44" stroke-width="0.7"/>
+              <ellipse cx="82" cy="168" rx="8" ry="8" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <ellipse cx="238" cy="168" rx="36" ry="16" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.2"/>
+              <ellipse cx="238" cy="168" rx="22" ry="10" fill="#162616" stroke="#c9a84c44" stroke-width="0.7"/>
+              <ellipse cx="238" cy="168" rx="8" ry="8" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <text x="160" y="14" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">VORNE — ANSICHT</text>
+              <!-- Zones -->
+              <rect x="38" y="38" width="114" height="56" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('windschutz-links')" class="zone-rect" data-zone="windschutz-links"/>
+              <rect x="168" y="38" width="114" height="56" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('windschutz-rechts')" class="zone-rect" data-zone="windschutz-rechts"/>
+              <rect x="38" y="82" width="80" height="60" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('scheinwerfer-links')" class="zone-rect" data-zone="scheinwerfer-links"/>
+              <rect x="202" y="82" width="80" height="60" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('scheinwerfer-rechts')" class="zone-rect" data-zone="scheinwerfer-rechts"/>
+              <rect x="105" y="88" width="110" height="50" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('kuehlergrill')" class="zone-rect" data-zone="kuehlergrill"/>
+              <rect x="38" y="134" width="100" height="40" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('stossstange-vorne-links')" class="zone-rect" data-zone="stossstange-vorne-links"/>
+              <rect x="182" y="134" width="100" height="40" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('stossstange-vorne-rechts')" class="zone-rect" data-zone="stossstange-vorne-rechts"/>
+              <g id="dmg-dots-front"></g>
+            </svg>
+          </div>
+
+          <!-- REAR VIEW — sedan rear -->
+          <div id="view-rear" class="car-view" style="display:none;">
+            <svg viewBox="0 0 320 190" width="100%" style="display:block;">
+              <ellipse cx="160" cy="182" rx="130" ry="6" fill="#000" opacity="0.25"/>
+              <path d="M38 160 L38 108 Q40 92 52 84 L72 76 Q90 58 108 50 Q130 40 160 38 Q190 40 212 50 Q230 58 248 76 L268 84 Q280 92 282 108 L282 160 Q282 168 274 168 L46 168 Q38 168 38 160 Z" fill="#1e2e1e" stroke="#c9a84c" stroke-width="1.4"/>
+              <!-- Rear windshield — more upright sedan -->
+              <path d="M112 52 Q132 44 160 42 Q188 44 208 52 L214 88 L106 88 Z" fill="#0d2a1a" stroke="#c9a84c77" stroke-width="0.9"/>
+              <!-- C-pillars -->
+              <line x1="112" y1="52" x2="106" y2="88" stroke="#c9a84c55" stroke-width="1"/>
+              <line x1="208" y1="52" x2="214" y2="88" stroke="#c9a84c55" stroke-width="1"/>
+              <!-- Boot lid -->
+              <path d="M68 90 L106 90 L110 134 L58 134 L58 108 Q58 96 68 90 Z" fill="#243424" stroke="#c9a84c33" stroke-width="0.6"/>
+              <path d="M252 90 L214 90 L210 134 L262 134 L262 108 Q262 96 252 90 Z" fill="#243424" stroke="#c9a84c33" stroke-width="0.6"/>
+              <rect x="110" y="90" width="100" height="44" rx="2" fill="#243424" stroke="#c9a84c22" stroke-width="0.5"/>
+              <!-- Rear bumper -->
+              <path d="M52 138 Q46 142 44 152 L44 160 Q44 166 52 167 L268 167 Q276 166 276 160 L276 152 Q274 142 268 138 Z" fill="#162616" stroke="#c9a84c55" stroke-width="0.8"/>
+              <!-- Number plate -->
+              <rect x="126" y="146" width="68" height="16" rx="2" fill="#c9a84c0d" stroke="#c9a84c44" stroke-width="0.7"/>
+              <!-- Tail lights — wide sedan style -->
+              <path d="M44 96 L68 90 L72 134 L44 134 Z" fill="#c9200018" stroke="#c92000" stroke-width="0.9"/>
+              <line x1="58" y1="90" x2="58" y2="134" stroke="#c9200044" stroke-width="0.5"/>
+              <path d="M276 96 L252 90 L248 134 L276 134 Z" fill="#c9200018" stroke="#c92000" stroke-width="0.9"/>
+              <line x1="262" y1="90" x2="262" y2="134" stroke="#c9200044" stroke-width="0.5"/>
+              <!-- Wheels -->
+              <ellipse cx="82" cy="168" rx="36" ry="16" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.2"/>
+              <ellipse cx="82" cy="168" rx="22" ry="10" fill="#162616" stroke="#c9a84c44" stroke-width="0.7"/>
+              <ellipse cx="82" cy="168" rx="8" ry="8" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <ellipse cx="238" cy="168" rx="36" ry="16" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.2"/>
+              <ellipse cx="238" cy="168" rx="22" ry="10" fill="#162616" stroke="#c9a84c44" stroke-width="0.7"/>
+              <ellipse cx="238" cy="168" rx="8" ry="8" fill="none" stroke="#c9a84c55" stroke-width="0.6"/>
+              <text x="160" y="14" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">HINTEN — ANSICHT</text>
+              <!-- Zones -->
+              <rect x="38" y="38" width="114" height="56" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('heckscheibe-links')" class="zone-rect" data-zone="heckscheibe-links"/>
+              <rect x="168" y="38" width="114" height="56" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('heckscheibe-rechts')" class="zone-rect" data-zone="heckscheibe-rechts"/>
+              <rect x="38" y="82" width="76" height="58" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('ruecklicht-links')" class="zone-rect" data-zone="ruecklicht-links"/>
+              <rect x="206" y="82" width="76" height="58" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('ruecklicht-rechts')" class="zone-rect" data-zone="ruecklicht-rechts"/>
+              <rect x="108" y="88" width="104" height="52" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('kofferraum-klappe')" class="zone-rect" data-zone="kofferraum-klappe"/>
+              <rect x="38" y="134" width="104" height="38" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('stossstange-hinten-links')" class="zone-rect" data-zone="stossstange-hinten-links"/>
+              <rect x="178" y="134" width="104" height="38" fill="rgba(201,168,76,0.03)" stroke="#c9a84c1a" rx="2" style="cursor:pointer;" onclick="markZone('stossstange-hinten-rechts')" class="zone-rect" data-zone="stossstange-hinten-rechts"/>
+              <g id="dmg-dots-rear"></g>
+            </svg>
+          </div>
+
+          <!-- LEFT SIDE VIEW — fully rectangular sedan -->
+          <div id="view-left" class="car-view" style="display:none;">
+            <svg viewBox="0 0 380 150" width="100%" style="display:block;">
+              <!-- Ground -->
+              <rect x="10" y="138" width="360" height="2" fill="#c9a84c22"/>
+
+              <!-- ── MAIN BODY — all straight lines, no curves ── -->
+              <!-- Lower body slab -->
+              <polygon points="30,118  30,108  50,102  50,74  72,56  100,42  175,34  230,34  260,42  272,56  280,68  290,78  308,88  322,96  322,118" fill="#1a2a1a" stroke="#c9a84c" stroke-width="1.6"/>
+
+              <!-- Hood top panel -->
+              <polygon points="50,74  100,42  175,34  175,68  50,74" fill="#223222" stroke="#c9a84c66" stroke-width="0.7"/>
+
+              <!-- Boot/trunk — short, nearly vertical -->
+              <polygon points="272,56  280,68  290,78  308,88  322,96  322,68  290,52  272,50" fill="#223222" stroke="#c9a84c66" stroke-width="0.7"/>
+
+              <!-- Roof slab — long, flat -->
+              <polygon points="100,42  175,34  230,34  260,42  272,56  272,68  100,68" fill="#2c3e2c" stroke="#c9a84c77" stroke-width="0.8"/>
+
+              <!-- Windshield — steep rake -->
+              <polygon points="100,42  175,34  178,62  96,66" fill="#0a2010" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- Rear window — upright -->
+              <polygon points="230,34  260,42  272,56  264,58  230,58  228,36" fill="#0a2010" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- A-pillar -->
+              <line x1="100" y1="42" x2="96" y2="66" stroke="#c9a84c" stroke-width="1.4"/>
+              <!-- C-pillar -->
+              <line x1="230" y1="34" x2="230" y2="58" stroke="#c9a84c" stroke-width="1.4"/>
+              <line x1="272" y1="56" x2="264" y2="58" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- B-pillar — bold vertical divider -->
+              <line x1="186" y1="58" x2="186" y2="108" stroke="#c9a84c" stroke-width="2"/>
+
+              <!-- Front door frame -->
+              <rect x="96" y="66" width="92" height="44" fill="none" stroke="#c9a84c55" stroke-width="0.8"/>
+              <!-- Rear door frame -->
+              <rect x="186" y="58" width="46" height="52" fill="none" stroke="#c9a84c55" stroke-width="0.8"/>
+
+              <!-- Waist line — strong horizontal crease -->
+              <line x1="50" y1="82" x2="322" y2="82" stroke="#c9a84c" stroke-width="1" stroke-dasharray="8,4"/>
+
+              <!-- Sill panel -->
+              <rect x="50" y="108" width="272" height="8" fill="#c9a84c22" stroke="#c9a84c" stroke-width="0.8"/>
+
+              <!-- Door handles — rectangular -->
+              <rect x="144" y="86" width="28" height="5" fill="#c9a84c55" stroke="#c9a84c" stroke-width="0.7"/>
+              <rect x="210" y="84" width="24" height="5" fill="#c9a84c55" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <!-- Headlight — slim rectangle -->
+              <rect x="28" y="88" width="24" height="14" fill="#c9a84c15" stroke="#c9a84c" stroke-width="1"/>
+              <line x1="40" y1="88" x2="40" y2="102" stroke="#c9a84c55" stroke-width="0.6"/>
+
+              <!-- Tail light — vertical rectangle -->
+              <rect x="310" y="80" width="12" height="28" fill="#8b000015" stroke="#8b0000" stroke-width="1"/>
+
+              <!-- Front bumper -->
+              <polygon points="30,108  30,122  50,118  50,108" fill="#162616" stroke="#c9a84c44" stroke-width="0.6"/>
+              <!-- Rear bumper -->
+              <polygon points="322,96  322,122  310,120  308,88" fill="#162616" stroke="#c9a84c44" stroke-width="0.6"/>
+
+              <!-- FRONT WHEEL — square-ish rim, 5 straight spokes -->
+              <rect x="60" y="108" width="44" height="32" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.5"/>
+              <rect x="66" y="114" width="32" height="20" fill="#162616" stroke="#c9a84c44" stroke-width="0.8"/>
+              <line x1="82" y1="114" x2="82" y2="134" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="66" y1="119" x2="98" y2="129" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="66" y1="129" x2="98" y2="119" stroke="#c9a84c55" stroke-width="1.2"/>
+              <rect x="79" y="121" width="6" height="6" fill="#c9a84c44" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <!-- REAR WHEEL -->
+              <rect x="252" y="108" width="44" height="32" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.5"/>
+              <rect x="258" y="114" width="32" height="20" fill="#162616" stroke="#c9a84c44" stroke-width="0.8"/>
+              <line x1="274" y1="114" x2="274" y2="134" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="258" y1="119" x2="290" y2="129" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="258" y1="129" x2="290" y2="119" stroke="#c9a84c55" stroke-width="1.2"/>
+              <rect x="271" y="121" width="6" height="6" fill="#c9a84c44" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <text x="190" y="10" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">LINKE SEITE</text>
+
+              <!-- ZONES -->
+              <rect x="28" y="40" width="70" height="80" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-vorderkotflugel')" class="zone-rect" data-zone="links-vorderkotflugel"/>
+              <rect x="96" y="56" width="92" height="54" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-vordertuer')" class="zone-rect" data-zone="links-vordertuer"/>
+              <rect x="186" y="52" width="46" height="58" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-hintertuer')" class="zone-rect" data-zone="links-hintertuer"/>
+              <rect x="230" y="40" width="92" height="80" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-heckkotflugel')" class="zone-rect" data-zone="links-heckkotflugel"/>
+              <rect x="96" y="26" width="178" height="32" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-dach')" class="zone-rect" data-zone="links-dach"/>
+              <rect x="50" y="108" width="272" height="16" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('links-schweller')" class="zone-rect" data-zone="links-schweller"/>
+              <g id="dmg-dots-left"></g>
+            </svg>
+          </div>
+
+          <!-- RIGHT SIDE VIEW — mirrored rectangular sedan -->
+          <div id="view-right" class="car-view" style="display:none;">
+            <svg viewBox="0 0 380 150" width="100%" style="display:block;">
+              <rect x="10" y="138" width="360" height="2" fill="#c9a84c22"/>
+
+              <!-- BODY — mirrored, front=right -->
+              <polygon points="350,118  350,108  330,102  330,74  308,56  280,42  205,34  150,34  120,42  108,56  100,68  90,78  72,88  58,96  58,118" fill="#1a2a1a" stroke="#c9a84c" stroke-width="1.6"/>
+
+              <!-- Hood -->
+              <polygon points="330,74  280,42  205,34  205,68  330,74" fill="#223222" stroke="#c9a84c66" stroke-width="0.7"/>
+
+              <!-- Boot -->
+              <polygon points="108,56  100,68  90,78  72,88  58,96  58,68  90,52  108,50" fill="#223222" stroke="#c9a84c66" stroke-width="0.7"/>
+
+              <!-- Roof -->
+              <polygon points="280,42  205,34  150,34  120,42  108,56  108,68  280,68" fill="#2c3e2c" stroke="#c9a84c77" stroke-width="0.8"/>
+
+              <!-- Windshield -->
+              <polygon points="280,42  205,34  202,62  284,66" fill="#0a2010" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- Rear window -->
+              <polygon points="150,34  120,42  108,56  116,58  150,58  152,36" fill="#0a2010" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- Pillars -->
+              <line x1="280" y1="42" x2="284" y2="66" stroke="#c9a84c" stroke-width="1.4"/>
+              <line x1="150" y1="34" x2="150" y2="58" stroke="#c9a84c" stroke-width="1.4"/>
+              <line x1="108" y1="56" x2="116" y2="58" stroke="#c9a84c" stroke-width="1.2"/>
+
+              <!-- B-pillar -->
+              <line x1="194" y1="58" x2="194" y2="108" stroke="#c9a84c" stroke-width="2"/>
+
+              <!-- Door frames -->
+              <rect x="194" y="66" width="92" height="44" fill="none" stroke="#c9a84c55" stroke-width="0.8"/>
+              <rect x="148" y="58" width="48" height="52" fill="none" stroke="#c9a84c55" stroke-width="0.8"/>
+
+              <!-- Waist line -->
+              <line x1="58" y1="82" x2="330" y2="82" stroke="#c9a84c" stroke-width="1" stroke-dasharray="8,4"/>
+
+              <!-- Sill -->
+              <rect x="58" y="108" width="272" height="8" fill="#c9a84c22" stroke="#c9a84c" stroke-width="0.8"/>
+
+              <!-- Door handles -->
+              <rect x="208" y="86" width="28" height="5" fill="#c9a84c55" stroke="#c9a84c" stroke-width="0.7"/>
+              <rect x="146" y="84" width="24" height="5" fill="#c9a84c55" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <!-- Headlight right -->
+              <rect x="328" y="88" width="24" height="14" fill="#c9a84c15" stroke="#c9a84c" stroke-width="1"/>
+              <line x1="340" y1="88" x2="340" y2="102" stroke="#c9a84c55" stroke-width="0.6"/>
+
+              <!-- Tail light left -->
+              <rect x="58" y="80" width="12" height="28" fill="#8b000015" stroke="#8b0000" stroke-width="1"/>
+
+              <!-- Bumpers -->
+              <polygon points="350,108  350,122  330,118  330,108" fill="#162616" stroke="#c9a84c44" stroke-width="0.6"/>
+              <polygon points="58,96  58,122  70,120  72,88" fill="#162616" stroke="#c9a84c44" stroke-width="0.6"/>
+
+              <!-- FRONT WHEEL right -->
+              <rect x="276" y="108" width="44" height="32" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.5"/>
+              <rect x="282" y="114" width="32" height="20" fill="#162616" stroke="#c9a84c44" stroke-width="0.8"/>
+              <line x1="298" y1="114" x2="298" y2="134" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="282" y1="119" x2="314" y2="129" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="282" y1="129" x2="314" y2="119" stroke="#c9a84c55" stroke-width="1.2"/>
+              <rect x="295" y="121" width="6" height="6" fill="#c9a84c44" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <!-- REAR WHEEL left -->
+              <rect x="84" y="108" width="44" height="32" fill="#0d1a0d" stroke="#c9a84c" stroke-width="1.5"/>
+              <rect x="90" y="114" width="32" height="20" fill="#162616" stroke="#c9a84c44" stroke-width="0.8"/>
+              <line x1="106" y1="114" x2="106" y2="134" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="90" y1="119" x2="122" y2="129" stroke="#c9a84c55" stroke-width="1.2"/>
+              <line x1="90" y1="129" x2="122" y2="119" stroke="#c9a84c55" stroke-width="1.2"/>
+              <rect x="103" y="121" width="6" height="6" fill="#c9a84c44" stroke="#c9a84c" stroke-width="0.7"/>
+
+              <text x="190" y="10" text-anchor="middle" font-size="7" fill="#c9a84c88" font-family="Montserrat,sans-serif" letter-spacing="2">RECHTE SEITE</text>
+
+              <!-- ZONES -->
+              <rect x="282" y="40" width="70" height="80" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-vorderkotflugel')" class="zone-rect" data-zone="rechts-vorderkotflugel"/>
+              <rect x="194" y="56" width="90" height="54" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-vordertuer')" class="zone-rect" data-zone="rechts-vordertuer"/>
+              <rect x="148" y="52" width="48" height="58" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-hintertuer')" class="zone-rect" data-zone="rechts-hintertuer"/>
+              <rect x="58" y="40" width="92" height="80" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-heckkotflugel')" class="zone-rect" data-zone="rechts-heckkotflugel"/>
+              <rect x="106" y="26" width="178" height="32" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-dach')" class="zone-rect" data-zone="rechts-dach"/>
+              <rect x="58" y="108" width="272" height="16" fill="rgba(201,168,76,0.03)" stroke="#c9a84c18" style="cursor:pointer;" onclick="markZone('rechts-schweller')" class="zone-rect" data-zone="rechts-schweller"/>
+              <g id="dmg-dots-right"></g>
+            </svg>
+          </div>
+
+          <div style="font-size:9px;color:#a09070;text-align:center;margin-top:6px;" id="zone-label">Tippe auf eine Zone zum Markieren — mehrere möglich</div>
+          <div id="zone-tags" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;min-height:20px;"></div>
+        </div>
+
+        <!-- Damage photos -->
+        <div style="font-size:9px;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Schadensfotos (min. 3)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(0)">
+            <img id="dmg-img-0" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-0" style="text-align:center;"><div style="font-size:16px;">📷</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Schaden 1</div></div>
+          </div>
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(1)">
+            <img id="dmg-img-1" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-1" style="text-align:center;"><div style="font-size:16px;">📷</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Schaden 2</div></div>
+          </div>
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(2)">
+            <img id="dmg-img-2" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-2" style="text-align:center;"><div style="font-size:16px;">📷</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Schaden 3</div></div>
+          </div>
+        </div>
+        <!-- Extra optional photo -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(3)" style="border-style:dashed;opacity:0.6;">
+            <img id="dmg-img-3" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-3" style="text-align:center;"><div style="font-size:16px;">+</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Optional</div></div>
+          </div>
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(4)" style="border-style:dashed;opacity:0.6;">
+            <img id="dmg-img-4" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-4" style="text-align:center;"><div style="font-size:16px;">+</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Optional</div></div>
+          </div>
+          <div class="photo-slot-sm" onclick="triggerDmgPhoto(5)" style="border-style:dashed;opacity:0.6;">
+            <img id="dmg-img-5" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            <div id="dmg-ph-5" style="text-align:center;"><div style="font-size:16px;">+</div><div style="font-size:8px;color:#a09070;margin-top:2px;">Optional</div></div>
+          </div>
+        </div>
+        <input type="file" id="dmgPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="handleDmgPhoto(event)">
+
+        <!-- Description -->
+        <div class="field">
+          <label class="label">Schadensbeschreibung</label>
+          <textarea class="input" id="dmg-text" rows="3" placeholder="z.B. Kratzer hinten links, ca. 10cm, lackschaden sichtbar..." style="resize:none;line-height:1.6;"></textarea>
+        </div>
+
+        <!-- Customer notification -->
+        <div class="check-row" onclick="toggleNotify()" style="margin-bottom:0;">
+          <div class="checkbox" id="notifyCb"></div>
+          <div>
+            <div class="check-text">Kunden proaktiv informieren</div>
+            <div class="check-sub">Schadensmeldung wird in der Buchung markiert</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer">
+      <button class="btn-primary" onclick="saveCheckin()">Check-In speichern & starten</button>
+    </div>
+  </div>
+
+  <!-- ===== CHECK-OUT SCREEN ===== -->
+  <div class="screen" id="scheckout">
+    <div class="header" style="position:relative;">
+      <span class="logo" style="font-size:13px;" id="co-order-title">Check-Out · Auftrag #2</span>
+      <button class="lang-btn" onclick="showDash()">✕</button>
+    </div>
+    <div class="content" style="padding-bottom:20px;">
+
+      <div class="section-title" style="margin-top:8px;">Abschlussfotos — 4 Seiten</div>
+      <div class="info-box">Bitte je ein Foto von allen 4 Seiten nach der Reinigung aufnehmen.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+        <div class="photo-slot" id="co-photo-vorne" onclick="triggerCoPhoto('co-photo-vorne','co-img-vorne')">
+          <img id="co-img-vorne" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="co-ph-vorne"><div style="font-size:22px;">📷</div><div style="font-size:10px;margin-top:4px;color:#a09070;">Vorne</div></div>
+        </div>
+        <div class="photo-slot" id="co-photo-hinten" onclick="triggerCoPhoto('co-photo-hinten','co-img-hinten')">
+          <img id="co-img-hinten" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="co-ph-hinten"><div style="font-size:22px;">📷</div><div style="font-size:10px;margin-top:4px;color:#a09070;">Hinten</div></div>
+        </div>
+        <div class="photo-slot" id="co-photo-links" onclick="triggerCoPhoto('co-photo-links','co-img-links')">
+          <img id="co-img-links" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="co-ph-links"><div style="font-size:22px;">📷</div><div style="font-size:10px;margin-top:4px;color:#a09070;">Links</div></div>
+        </div>
+        <div class="photo-slot" id="co-photo-rechts" onclick="triggerCoPhoto('co-photo-rechts','co-img-rechts')">
+          <img id="co-img-rechts" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <div class="photo-placeholder" id="co-ph-rechts"><div style="font-size:22px;">📷</div><div style="font-size:10px;margin-top:4px;color:#a09070;">Rechts</div></div>
+        </div>
+      </div>
+      <input type="file" id="coPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="handleCoPhoto(event)">
+
+      <div class="field">
+        <label class="label">Abschluss-Kommentar (optional)</label>
+        <textarea class="input" id="co-comment" rows="2" placeholder="z.B. Felgen extra gereinigt, Innenraum gedüftet..." style="resize:none;line-height:1.6;"></textarea>
+      </div>
+
+      <div class="info-box" style="border-color:#c9a84c55;">
+        Nach dem Speichern wird der Kunde automatisch benachrichtigt, dass sein Fahrzeug fertig ist.
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn-primary" onclick="saveCheckout()">Auftrag abschliessen & Kunden benachrichtigen</button>
+    </div>
+  </div>
+
+
+  <!-- ===== STAFF LOGIN ===== -->
+  <div class="screen" id="slogin">
+    <div class="header" style="position:relative;">
+      <span class="logo" style="font-size:13px;">Mitarbeiter-Zugang</span>
+      <button class="lang-btn" onclick="go(1)">✕</button>
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;padding:30px 20px;">
+
+      <div style="width:56px;height:56px;background:#c9a84c22;border:1px solid #c9a84c44;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="5" y="11" width="14" height="10" rx="0" stroke="#c9a84c" stroke-width="1.5"/>
+          <path d="M8 11V7a4 4 0 018 0v4" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="square"/>
+          <rect x="11" y="15" width="2" height="3" fill="#c9a84c"/>
+        </svg>
+      </div>
+
+      <div style="font-family:'Playfair Display',serif;font-size:18px;color:#c9a84c;margin-bottom:6px;text-align:center;">Staff-Bereich</div>
+      <div style="font-size:11px;color:#a09070;margin-bottom:28px;text-align:center;line-height:1.6;">Nur für autorisierte Mitarbeiter.<br>Bitte Passwort eingeben.</div>
+
+      <div style="width:100%;max-width:280px;">
+        <div class="field">
+          <label class="label">Passwort</label>
+          <input class="input" type="password" id="staff-pw" placeholder="••••••••"
+            onkeydown="if(event.key==='Enter')checkLogin()"
+            style="text-align:center;letter-spacing:4px;font-size:18px;">
+        </div>
+        <div id="login-error" style="display:none;background:#2a0d0d;border:1px solid #ff333322;border-radius:4px;padding:8px 12px;font-size:11px;color:#ff8888;text-align:center;margin-bottom:12px;">
+          Falsches Passwort. Bitte erneut versuchen.
+        </div>
+        <button class="btn-primary" onclick="checkLogin()" style="margin-top:4px;">Einloggen</button>
+      </div>
+
+      <div style="margin-top:32px;font-size:9px;color:#a09070;text-align:center;line-height:1.8;">
+        Bei Problemen wende dich an den Administrator.<br>
+        <span style="color:#c9a84c44;">cigar-and-shine.ch</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let lang = 'de';
+  let selPrice = 69, selName = 'Quick Puff', selPkg = 1;
+  let tipAmt = 0, firmaOn = false;
+
+  const TR = {
+    de: {
+      slogan: 'Ihr Genuss hat Vorrang.<br>Wir kümmern uns um den Glanz.',
+      choose: 'Programme wählen',
+      d1: 'Aussenreinigung (ca. 60 Min.)', d2: 'Innenreinigung (ca. 60 Min.)', d3: 'Komplettreinigung (ca. 90 Min.)',
+      'book-btn': 'Programm wählen & Buchen',
+      st1:'Programm', st2:'Fahrzeug', st3:'Details', st4:'Zahlung',
+      s2title:'Fahrzeug & Kontakt', lemail:'E-Mail *', lmake:'Marke *',
+      lmodel:'Modell *', lcolor:'Farbe *', lplate:'Kennzeichen', lloc:'Parkplatz',
+      datainfo:'Fahrzeugdaten lokal gespeichert für schnellere Buchungen.',
+      back2:'Zurück', next2:'Weiter',
+      s3title:'Rechnungsdetails', s3info:'Benötigen Sie eine Firmenrechnung? Aktivieren Sie die Option.',
+      firmacb:'Ich benötige eine Firmenrechnung', firmasub:'Für steuerliche Abzüge (optional)',
+      lcompany:'Firmenname', lstreet:'Strasse', lplz:'PLZ', lcity:'Ort',
+      privacy:'Ihre Daten werden vertraulich behandelt.',
+      back3:'Zurück', next3:'Weiter zur Zahlung',
+      s4title:'Trinkgeld & Zahlung', tipq:'Ein Dankeschön für das Service-Team?',
+      nein:'Nein', lcustom:'Eigener Betrag (CHF)',
+      sprogram:'Programm', stip:'Trinkgeld', stotal:'Total',
+      spay:'Zahlungsart', twinthint:'Vor Ort bezahlen',
+      cash:'Bar', cashhint:'An der Bar bezahlen', back4:'Zurück',
+      conftitle:'Auftrag bestätigt!',
+      confmsg:'Bitte hinterlegen Sie den Schlüssel beim Bar-Mitarbeiter.<br>Wir kümmern uns um den Rest.',
+      confstatus:'Status', confwaiting:'Wartend — Team wird benachrichtigt',
+      newbook:'Danke für Ihr Vertrauen. Geniessen Sie Ihre Zigarre.',
+      openUntil:'Letzte Fahrzeugannahme heute bis', closed:'Service heute geschlossen', sun:'Sonntag — kein Service'
+    },
+    en: {
+      slogan: 'Your pleasure comes first.<br>We take care of the shine.',
+      choose: 'Choose your programme',
+      d1:'Exterior cleaning (approx. 60 min.)', d2:'Interior cleaning (approx. 60 min.)', d3:'Full detail (approx. 90 min.)',
+      'book-btn': 'Choose & Book',
+      st1:'Package', st2:'Vehicle', st3:'Details', st4:'Payment',
+      s2title:'Vehicle & Contact', lemail:'Email *', lmake:'Make *',
+      lmodel:'Model *', lcolor:'Colour *', lplate:'Licence plate', lloc:'Parking spot',
+      datainfo:'Vehicle data stored locally for faster bookings.',
+      back2:'Back', next2:'Continue',
+      s3title:'Invoice details', s3info:'Do you need a company invoice? Activate the option below.',
+      firmacb:'I need a company invoice', firmasub:'For tax deduction purposes (optional)',
+      lcompany:'Company name', lstreet:'Street', lplz:'ZIP', lcity:'City',
+      privacy:'Your data is handled confidentially.',
+      back3:'Back', next3:'Continue to payment',
+      s4title:'Tip & Payment', tipq:'A thank you for the service team?',
+      nein:'No', lcustom:'Custom amount (CHF)',
+      sprogram:'Package', stip:'Tip', stotal:'Total',
+      spay:'Payment method', twinthint:'Pay on site',
+      cash:'Cash', cashhint:'Pay at the bar', back4:'Back',
+      conftitle:'Booking confirmed!',
+      confmsg:'Your vehicle will be picked up.<br>Please leave the key at the bar.<br><br>',
+      confstatus:'Status', confwaiting:'Waiting — team is being notified',
+      newbook:'New booking',
+      openUntil:'Last drop-off today until', closed:'Service closed today', sun:'Sunday — no service'
+    }
+  };
+
+  function t(k) { return TR[lang][k] || k; }
+
+  function toggleLang() {
+    lang = lang === 'de' ? 'en' : 'de';
+    document.getElementById('langBtn').textContent = lang === 'de' ? 'EN' : 'DE';
+    applyLang();
+    renderTime();
+  }
+
+  function applyLang() {
+    const map = {
+      't-slogan':'slogan','t-choose':'choose','t-d1':'d1','t-d2':'d2','t-d3':'d3',
+      't-book-btn':'book-btn','t-st1':'st1','t-st2':'st2','t-st3':'st3','t-st4':'st4',
+      't-s2title':'s2title','t-lemail':'lemail','t-lmake':'lmake','t-lmodel':'lmodel',
+      't-lcolor':'lcolor','t-lplate':'lplate','t-lloc':'lloc','t-datainfo':'datainfo',
+      't-back2':'back2','t-next2':'next2','t-s3title':'s3title','t-s3info':'s3info',
+      't-firmacb':'firmacb','t-firmasub':'firmasub','t-lcompany':'lcompany',
+      't-lstreet':'lstreet','t-lplz':'lplz','t-lcity':'lcity','t-privacy':'privacy',
+      't-back3':'back3','t-next3':'next3','t-s4title':'s4title','t-tipq':'tipq',
+      't-nein':'nein','t-lcustom':'lcustom','t-sprogram':'sprogram','t-stip':'stip',
+      't-stotal':'stotal','t-spay':'spay','t-twinthint':'twinthint','t-cash':'cash',
+      't-cashhint':'cashhint','t-back4':'back4','t-conftitle':'conftitle',
+      't-confmsg':'confmsg','t-confstatus':'confstatus','t-confwaiting':'confwaiting',
+      't-newbook':'newbook'
+    };
+    for (const [id, key] of Object.entries(map)) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = t(key);
+    }
+  }
+
+  function isOpen() {
+    const now = new Date();
+    const d = now.getDay(), h = now.getHours(), m = now.getMinutes();
+    const mins = h * 60 + m;
+    if (d === 0) return { open: false, why: 'sun' };
+    if (d === 6) return mins >= 600 && mins < 1020 ? { open: true, until: '17:00' } : { open: false, why: 'closed' };
+    return mins >= 480 && mins < 1050 ? { open: true, until: '17:30' } : { open: false, why: 'closed' };
+  }
+
+  function renderTime() {
+    const box = document.getElementById('timeBox');
+    const s = isOpen();
+    if (s.open) {
+      box.innerHTML = '<div class="status-open">✓ ' + t('openUntil') + ' <strong style="color:#c9a84c">' + s.until + ' Uhr</strong></div>';
+    } else if (s.why === 'sun') {
+      box.innerHTML = '<div class="status-closed">⊘ ' + t('sun') + '</div>';
+    } else {
+      box.innerHTML = '<div class="status-closed">⊘ ' + t('closed') + '</div>';
+    }
+  }
+
+  function go(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s' + n).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function showDash() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('sdash').classList.add('active');
+  }
+
+  function switchTab(t) {
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + t).classList.add('active');
+  }
+
+  function goToVehicle() {
+    go(2);
+  }
+
+  function pickPkg(n, price, name) {
+    selPkg = n; selPrice = price; selName = name;
+    document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+    document.getElementById('pkg' + n).classList.add('selected');
+    const badge = name + ' — ' + price.toFixed(2) + ' CHF';
+    ['s2badge','s3badge','s4badge'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = badge;
+    });
+    updateSum();
+  }
+
+  function toggleFirma() {
+    firmaOn = !firmaOn;
+    const cb = document.getElementById('firmaCb');
+    const f = document.getElementById('firmaFields');
+    if (firmaOn) {
+      cb.classList.add('on');
+      cb.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#0d1a0d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      f.classList.add('show');
+    } else {
+      cb.classList.remove('on');
+      cb.innerHTML = '';
+      f.classList.remove('show');
+    }
+  }
+
+  function setTip(a) {
+    tipAmt = a;
+    document.getElementById('f-tip').value = a > 0 ? a : '';
+    document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('on'));
+    const m = { 0:'tip0', 5:'tip5', 10:'tip10', 20:'tip20' };
+    if (m[a]) document.getElementById(m[a]).classList.add('on');
+    updateSum();
+  }
+
+  function customTip(v) {
+    tipAmt = parseFloat(v) || 0;
+    document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('on'));
+    updateSum();
+  }
+
+  function updateSum() {
+    const total = selPrice + tipAmt;
+    document.getElementById('sum-prog').textContent = selPrice.toFixed(2) + ' CHF';
+    document.getElementById('sum-total').textContent = total.toFixed(2) + ' CHF';
+    const tr = document.getElementById('tipRow');
+    if (tipAmt > 0) {
+      tr.style.display = 'flex';
+      document.getElementById('sum-tip').textContent = tipAmt.toFixed(2) + ' CHF';
+    } else {
+      tr.style.display = 'none';
+    }
+  }
+
+  function finalize(method) {
+    document.getElementById('confDetail').textContent = selName + ' · ' + (selPrice + tipAmt).toFixed(2) + ' CHF · ' + method;
+    go(5);
+  }
+
+  function resetAll() {
+    tipAmt = 0; firmaOn = false;
+    const cb = document.getElementById('firmaCb');
+    cb.classList.remove('on'); cb.innerHTML = '';
+    document.getElementById('firmaFields').classList.remove('show');
+    document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('on'));
+    document.getElementById('tip0').classList.add('on');
+    updateSum();
+  }
+
+  // Init
+  pickPkg(1, 79, 'Quick Puff');
+  renderTime();
+
+  // --- STAFF WORKFLOW ---
+  let currentOrder = 1;
+  let currentPhotoTarget = null;
+  let currentDmgIndex = 0;
+  let currentCoPhotoTarget = null;
+  let hasDamage = null;
+  let notifyCustomer = false;
+  let markedZones = [];
+
+  function switchTab(tab) {
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  function openStaffLogin() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('slogin').classList.add('active');
+    document.getElementById('staff-pw').value = '';
+    document.getElementById('login-error').style.display = 'none';
+    window.scrollTo(0,0);
+  }
+
+  const STAFF_PW = 'cigar2024'; // placeholder — will be replaced with real auth in v1.0
+
+  function checkLogin() {
+    const pw = document.getElementById('staff-pw').value;
+    if (pw === STAFF_PW) {
+      document.getElementById('login-error').style.display = 'none';
+      showDash();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('staff-pw').value = '';
+      document.getElementById('staff-pw').focus();
+    }
+  }
+
+  function showDash() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('sdash').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function openCheckin(orderId) {
+    currentOrder = orderId;
+    hasDamage = null; notifyCustomer = false; markedZones = [];
+    document.getElementById('ci-order-title').textContent = 'Check-In · Auftrag #' + orderId;
+    document.getElementById('damageDetails').style.display = 'none';
+    document.querySelectorAll('.damage-choice').forEach(el => el.className = 'damage-choice');
+    ['ci-img-vorne','ci-img-hinten','ci-img-links','ci-img-rechts'].forEach(id => { document.getElementById(id).style.display='none'; });
+    ['ci-ph-vorne','ci-ph-hinten','ci-ph-links','ci-ph-rechts'].forEach(id => { document.getElementById(id).style.display='block'; });
+    ['ci-photo-vorne','ci-photo-hinten','ci-photo-links','ci-photo-rechts'].forEach(id => { document.getElementById(id).classList.remove('done'); });
+    document.querySelectorAll('.zone-rect').forEach(el => el.classList.remove('marked'));
+    markedZones = [];
+    renderZoneTags();
+    document.getElementById('dmg-text').value = '';
+    const ncb = document.getElementById('notifyCb'); ncb.classList.remove('on'); ncb.innerHTML = '';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('scheckin').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function openCheckout(orderId) {
+    currentOrder = orderId;
+    document.getElementById('co-order-title').textContent = 'Check-Out · Auftrag #' + orderId;
+    ['co-img-vorne','co-img-hinten','co-img-links','co-img-rechts'].forEach(id => { document.getElementById(id).style.display='none'; });
+    ['co-ph-vorne','co-ph-hinten','co-ph-links','co-ph-rechts'].forEach(id => { document.getElementById(id).style.display='block'; });
+    ['co-photo-vorne','co-photo-hinten','co-photo-links','co-photo-rechts'].forEach(id => { document.getElementById(id).classList.remove('done'); });
+    document.getElementById('co-comment').value = '';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('scheckout').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function startOrder(orderId) {
+    const statusEl = document.getElementById('status-' + orderId);
+    statusEl.textContent = 'In Arbeit'; statusEl.className = 'dash-status s-working';
+    const actions = document.querySelector('#order-' + orderId + ' .dash-actions');
+    actions.innerHTML = '<div class="dash-btn" onclick="openCheckout(' + orderId + ')">📷 Check-Out</div><div class="dash-btn primary" onclick="openCheckout(' + orderId + ')">✓ Fertig</div>';
+  }
+
+  function triggerPhoto(slotId, imgId) {
+    currentPhotoTarget = { slotId, imgId };
+    document.getElementById('photoInput').click();
+  }
+
+  function getTimestamp() {
+    const now = new Date();
+    return now.toLocaleDateString('de-CH') + ' ' + now.toLocaleTimeString('de-CH', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+
+  function addTimestampToSlot(slotId, imgId) {
+    const slot = document.getElementById(slotId);
+    // Remove old timestamp if any
+    const old = slot.querySelector('.ts-label');
+    if (old) old.remove();
+    const ts = document.createElement('div');
+    ts.className = 'ts-label';
+    ts.textContent = getTimestamp();
+    ts.style.cssText = 'position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:8px;font-family:Montserrat,sans-serif;color:#c9a84c;background:rgba(0,0,0,0.72);padding:2px 4px;letter-spacing:0.5px;pointer-events:none;z-index:2;';
+    slot.appendChild(ts);
+  }
+
+  function handlePhoto(event) {
+    const file = event.target.files[0];
+    if (!file || !currentPhotoTarget) return;
+    const url = URL.createObjectURL(file);
+    const img = document.getElementById(currentPhotoTarget.imgId);
+    const phId = currentPhotoTarget.imgId.replace('ci-img-','ci-ph-');
+    img.src = url; img.style.display = 'block';
+    const ph = document.getElementById(phId); if (ph) ph.style.display = 'none';
+    document.getElementById(currentPhotoTarget.slotId).classList.add('done');
+    addTimestampToSlot(currentPhotoTarget.slotId, currentPhotoTarget.imgId);
+    event.target.value = '';
+  }
+
+  function triggerDmgPhoto(index) {
+    currentDmgIndex = index;
+    document.getElementById('dmgPhotoInput').click();
+  }
+
+  function handleDmgPhoto(event) {
+    const file = event.target.files[0]; if (!file) return;
+    const url = URL.createObjectURL(file);
+    const imgId = 'dmg-img-' + currentDmgIndex;
+    const img = document.getElementById(imgId);
+    const ph = document.getElementById('dmg-ph-' + currentDmgIndex);
+    img.src = url; img.style.display = 'block';
+    if (ph) ph.style.display = 'none';
+    // Add timestamp to parent slot-sm
+    const slot = img.parentElement;
+    const old = slot.querySelector('.ts-label');
+    if (old) old.remove();
+    const ts = document.createElement('div');
+    ts.className = 'ts-label';
+    ts.textContent = getTimestamp();
+    ts.style.cssText = 'position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:7px;font-family:Montserrat,sans-serif;color:#c9a84c;background:rgba(0,0,0,0.72);padding:1px 3px;pointer-events:none;z-index:2;';
+    slot.style.position = 'relative';
+    slot.appendChild(ts);
+    event.target.value = '';
+  }
+
+  function triggerCoPhoto(slotId, imgId) {
+    currentCoPhotoTarget = { slotId, imgId };
+    document.getElementById('coPhotoInput').click();
+  }
+
+  function handleCoPhoto(event) {
+    const file = event.target.files[0]; if (!file || !currentCoPhotoTarget) return;
+    const url = URL.createObjectURL(file);
+    const img = document.getElementById(currentCoPhotoTarget.imgId);
+    const phId = currentCoPhotoTarget.imgId.replace('co-img-','co-ph-');
+    img.src = url; img.style.display = 'block';
+    const ph = document.getElementById(phId); if (ph) ph.style.display = 'none';
+    document.getElementById(currentCoPhotoTarget.slotId).classList.add('done');
+    addTimestampToSlot(currentCoPhotoTarget.slotId, currentCoPhotoTarget.imgId);
+    event.target.value = '';
+  }
+
+  function setDamage(yes) {
+    hasDamage = yes;
+    document.getElementById('dc-no').className = 'damage-choice' + (yes ? '' : ' selected-no');
+    document.getElementById('dc-yes').className = 'damage-choice' + (yes ? ' selected-yes' : '');
+    document.getElementById('damageDetails').style.display = yes ? 'block' : 'none';
+  }
+
+  let activeView = 'top';
+  const zoneNames = {
+    'motorhaube':'Motorhaube','ecke-vorne-links':'Ecke vorne links','ecke-vorne-rechts':'Ecke vorne rechts',
+    'seite-links':'Seite links','seite-rechts':'Seite rechts','dach':'Dach',
+    'ecke-hinten-links':'Ecke hinten links','ecke-hinten-rechts':'Ecke hinten rechts','kofferraum':'Kofferraum',
+    'windschutz-links':'Windschutzscheibe links','windschutz-rechts':'Windschutzscheibe rechts',
+    'scheinwerfer-links':'Scheinwerfer links','scheinwerfer-rechts':'Scheinwerfer rechts',
+    'kuehlergrill':'Kühlergrill / Motorhaube','stossstange-vorne-links':'Stossstange vorne links',
+    'stossstange-vorne-rechts':'Stossstange vorne rechts','heckscheibe-links':'Heckscheibe links',
+    'heckscheibe-rechts':'Heckscheibe rechts','ruecklicht-links':'Rücklicht links',
+    'ruecklicht-rechts':'Rücklicht rechts','kofferraum-klappe':'Kofferraum-Klappe',
+    'stossstange-hinten-links':'Stossstange hinten links','stossstange-hinten-rechts':'Stossstange hinten rechts',
+    'links-vorderkotflugel':'Kotflügel vorne links','links-vordertuer':'Vordertür links',
+    'links-hintertuer':'Hintertür links','links-heckkotflugel':'Kotflügel hinten links',
+    'links-dach':'Dach links','links-schweller':'Schweller links',
+    'rechts-vorderkotflugel':'Kotflügel vorne rechts','rechts-vordertuer':'Vordertür rechts',
+    'rechts-hintertuer':'Hintertür rechts','rechts-heckkotflugel':'Kotflügel hinten rechts',
+    'rechts-dach':'Dach rechts','rechts-schweller':'Schweller rechts'
+  };
+
+  function switchView(view) {
+    activeView = view;
+    document.querySelectorAll('.car-view').forEach(v => v.style.display = 'none');
+    document.getElementById('view-' + view).style.display = 'block';
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('vtab-' + view).classList.add('active');
+  }
+
+  function markZone(zone) {
+    if (!markedZones.includes(zone)) {
+      markedZones.push(zone);
+      // Highlight the clicked zone rect
+      document.querySelectorAll('[data-zone="' + zone + '"]').forEach(el => el.classList.add('marked'));
+    } else {
+      // Toggle off
+      markedZones = markedZones.filter(z => z !== zone);
+      document.querySelectorAll('[data-zone="' + zone + '"]').forEach(el => el.classList.remove('marked'));
+    }
+    renderZoneTags();
+  }
+
+  function renderZoneTags() {
+    const container = document.getElementById('zone-tags');
+    if (!container) return;
+    if (markedZones.length === 0) {
+      container.innerHTML = '';
+      document.getElementById('zone-label').textContent = 'Tippe auf eine Zone zum Markieren — mehrere möglich';
+      return;
+    }
+    document.getElementById('zone-label').textContent = markedZones.length + ' Zone(n) markiert:';
+    container.innerHTML = markedZones.map(z =>
+      '<span class="zone-tag" onclick="markZone(\'' + z + '\')" title="Klicken zum Entfernen">✕ ' + (zoneNames[z] || z) + '</span>'
+    ).join('');
+  }
+
+  function toggleNotify() {
+    notifyCustomer = !notifyCustomer;
+    const cb = document.getElementById('notifyCb');
+    if (notifyCustomer) {
+      cb.classList.add('on');
+      cb.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#0d1a0d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    } else { cb.classList.remove('on'); cb.innerHTML = ''; }
+  }
+
+  function saveCheckin() {
+    if (hasDamage === null) { alert('Bitte Zustand auswählen: Schadensfrei oder Schäden vorhanden'); return; }
+    const msg = hasDamage
+      ? '⚠ Check-In gespeichert.\nSchäden dokumentiert' + (notifyCustomer ? '\n→ Kunde wird proaktiv informiert.' : '\n→ Nur intern gespeichert.')
+      : '✓ Check-In gespeichert.\nFahrzeug schadensfrei dokumentiert.';
+    alert(msg);
+    startOrder(currentOrder);
+    showDash();
+  }
+
+  function saveCheckout() {
+    alert('✓ Auftrag #' + currentOrder + ' abgeschlossen!\n\nKunde wird benachrichtigt:\n"Ihr Fahrzeug ist fertig — Schlüssel an der Bar."');
+    const statusEl = document.getElementById('status-' + currentOrder);
+    if (statusEl) { statusEl.textContent = 'Fertig'; statusEl.className = 'dash-status s-done'; }
+    showDash();
+  }
+</script>
+</body>
+</html>
